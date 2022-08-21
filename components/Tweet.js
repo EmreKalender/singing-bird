@@ -22,16 +22,18 @@ export default function Tweet({ tweet }) {
             <div className='ml-3 -mt-6'>
               <p className=''>
                 <Link href={`${tweet.author.name}`}>
-                <a>
-                  <span className='text-base font-medium leading-6 color-primary hover:underline'>
-                    {tweet.author.name}
-                  </span>
-                </a>
+                    <a>
+                        <span className='text-base font-medium leading-6 color-primary hover:underline'>
+                            {tweet.author.name}
+                        </span>
+                    </a>
                 </Link>
                 <span className='pl-1 text-sm font-light leading-5 color-dimmed'>
-                  <a className='hover:underline'>
-                    {timeago.format(new Date(tweet.createdAt))}
-                  </a>
+                    <Link href={`/${tweet.author.name}/status/${tweet.id}`}>
+                        <a className='hover:underline'>
+                            {timeago.format(new Date(tweet.createdAt))}
+                        </a>
+                    </Link>
                 </span>
               </p>
             </div>
