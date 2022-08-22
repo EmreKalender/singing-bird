@@ -1,7 +1,7 @@
 import { useSession} from 'next-auth/react'
 import {useState} from 'react'
 import Tweet from 'components/Tweet'
-export default function ({tweets}){
+export default function ({tweets, noLink}){
     if(!tweets) return null
 
     return(
@@ -9,7 +9,7 @@ export default function ({tweets}){
             {
                 tweets.map(
                     (tweet,index)=>{
-                        return <Tweet key={index} tweet={tweet}/>
+                        return <Tweet key={index} tweet={tweet} noLink={noLink}/>
                     }
                 )
             }
