@@ -16,7 +16,7 @@ export default async function handler(req,res){
     if(!user) return res.status(401).json({message: 'User not defined'})
     
     if(req.method==='POST'){
-        await prisma.tweet.create({
+        const tweet=await prisma.tweet.create({
             data:{
                 content: req.body.content,
                 parent: req.body.parent || null,
@@ -25,7 +25,13 @@ export default async function handler(req,res){
                 },
             },
         })
-        res.end()
+
+        const tweetWithAuthor= await prisma.tweet.findUnique({
+            where: {id:tweet.id,},
+            inclue: {author:true,},
+        })
+
+        res.json(tweetWithAuthor)
         return
     }
 

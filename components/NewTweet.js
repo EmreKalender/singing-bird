@@ -1,7 +1,7 @@
 import { useSession} from 'next-auth/react'
 import { useRouter } from 'next/router';
 import {useState} from 'react'
-export default function (){
+export default function ({tweets,setTweets}){
     const {data: session,status}=useSession();
     const [content,setContent]=useState('')
     const router=useRouter()
@@ -14,7 +14,7 @@ export default function (){
                 alert('no content')
                 return
             }
-            await fetch('api/tweet',{
+            const res=await fetch('api/tweet',{
                 body: JSON.stringify({
                     content,
                     }),
@@ -23,7 +23,10 @@ export default function (){
                     },
                     method: 'POST',
                 })
-            router.reload(window.location.pathname)
+
+            const tweet=await res.json()
+            setTweets([...tweet, ...tweets])
+            setContent('')
         }}>
             <div className='flex'>
                 <div className='flex-1 px-1 pt-2 mt-2 mr-1 ml-1'>
@@ -33,6 +36,7 @@ export default function (){
                         cols={50}
                         placeholder="What do you sing?"
                         name='content'
+                        value={content}
                         onChange={(event)=>setContent(event.target.value)}
                         />
                 </div>
